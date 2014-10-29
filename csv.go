@@ -30,3 +30,8 @@ func (w *Writer) Write(m map[string]string) error {
 
 	return w.Writer.Write(row)
 }
+
+// WriteHeader writes column names as a header line.
+func (w *Writer) WriteHeader() error {
+	return w.Writer.Write(w.cols)
+}
