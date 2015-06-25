@@ -77,3 +77,23 @@ Manny,Cat,just a cat
 
 	assert.Equal(t, exp, b.String())
 }
+
+func Benchmark(b *testing.B) {
+	buf := bytes.NewBuffer(nil)
+
+	w := New(buf, []string{"first_name", "last_name", "species"})
+
+	err := w.WriteHeader()
+	check(err)
+
+	for i := 0; i < b.N; i++ {
+		err = w.Write(map[string]string{
+			"first_name": "Tobi",
+			"last_name":  "Ferret",
+			"species":    "ferret",
+			"more":       "stuff",
+		})
+
+		check(err)
+	}
+}
